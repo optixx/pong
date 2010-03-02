@@ -52,7 +52,7 @@ end
 	 
 reg hsync, vsync;
 always @(posedge clk25) begin
-	hsync <= ~(xpos > 664 && xpos <= 759);  // active for 96 clocks
+	hsync <= ~(xpos > 654 && xpos <= 759);  // active for 96 clocks
 	vsync <= ~(ypos == 490 || ypos == 491);   // active for lines 490 and 491
 end
 
@@ -77,16 +77,11 @@ module game(input clk25,
 				output [3:0] green,
 				output [3:0] blue);
 		
-// paddle movement		
 reg [8:0] paddlePosition;
-//reg [2:0] quadAr, quadBr;
-//always @(posedge clk25) quadAr <= {quadAr[1:0], button_left};
-//always @(posedge clk25) quadBr <= {quadBr[1:0], button_right};
 
 wire endOfFrame = (xpos == 0 && ypos == 480);
 
 always @(posedge clk25)
-//if(quadAr[2] ^ quadAr[1] ^ quadBr[2] ^ quadBr[1])
 begin
 	if(endOfFrame && button_left) begin
 		if(paddlePosition < 508)        // make sure the value doesn't overflow
