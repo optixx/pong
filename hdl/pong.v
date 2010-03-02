@@ -71,26 +71,28 @@ endmodule
 module game(input clk25,
 				input [9:0] xpos,
 				input [9:0] ypos,
-				input rota,
-				input rotb,
+				input button_left,
+				input button_right,
 				output [3:0] red,
 				output [3:0] green,
 				output [3:0] blue);
 		
 // paddle movement		
 reg [8:0] paddlePosition;
-reg [2:0] quadAr, quadBr;
-always @(posedge clk25) quadAr <= {quadAr[1:0], rota};
-always @(posedge clk25) quadBr <= {quadBr[1:0], rotb};
+//reg [2:0] quadAr, quadBr;
+//always @(posedge clk25) quadAr <= {quadAr[1:0], button_left};
+//always @(posedge clk25) quadBr <= {quadBr[1:0], button_right};
+
+wire endOfFrame = (xpos == 0 && ypos == 480);
 
 always @(posedge clk25)
-if(quadAr[2] ^ quadAr[1] ^ quadBr[2] ^ quadBr[1])
+//if(quadAr[2] ^ quadAr[1] ^ quadBr[2] ^ quadBr[1])
 begin
-	if(quadAr[2] ^ quadBr[1]) begin
+	if(endOfFrame && button_left) begin
 		if(paddlePosition < 508)        // make sure the value doesn't overflow
 			paddlePosition <= paddlePosition + 4;
 	end
-	else begin
+	if(endOfFrame && button_right) begin
 		if(paddlePosition > 3)        // make sure the value doesn't underflow
 			paddlePosition <= paddlePosition - 4;
 	end
@@ -102,7 +104,6 @@ reg [8:0] ballY;
 reg ballXdir, ballYdir;
 reg bounceX, bounceY;
 	
-wire endOfFrame = (xpos == 0 && ypos == 480);
 	
 always @(posedge clk25) begin
 	if (endOfFrame) begin // update ball position at end of each frame
@@ -180,8 +181,8 @@ endmodule
 // -----------------------------------------------
 module pong(
     input clk50,
-    input rota,
-    input rotb,
+    input button_left,
+    input button_right,
     input button,
     output [3:0] red,
     output [3:0] green,
@@ -207,7 +208,7 @@ wire [9:0] ypos;
 assign led = button;
 
 video_timer video_timer_inst(clk25, hsync, vsync, xpos, ypos);
-game game_inst(clk25, xpos, ypos, rota, rotb, red, green, blue);
+game game_inst(clk25, xpos, ypos, button_left, button_right, red, green, blue);
 					
 endmodule
 

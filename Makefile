@@ -15,7 +15,7 @@ UTFILE = build/scripts/$(TARGET).ut
 
 #root of your xilinx binaries
 XILINXROOT = /opt/Xilinx/11.1/ISE/bin/lin
-XILINXROOT = /home/david/Data/devel/apps/Xilinx/11.1/ISE/bin/lin
+#XILINXROOT = /home/david/Data/devel/apps/Xilinx/11.1/ISE/bin/lin
 
 XST = $(XILINXROOT)/xst
 NGDBUILD = $(XILINXROOT)/ngdbuild
