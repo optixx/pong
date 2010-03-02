@@ -1,0 +1,9 @@
+run
+-ifn ../../build/scripts/pong.prj
+-ofn ../../build/obj/pong.ngc
+-ofmt NGC 
+-p xc3s1200e-fg320-4
+-opt_mode Area
+-opt_level 1
+-top pong
+-keep_hierarchy yes
